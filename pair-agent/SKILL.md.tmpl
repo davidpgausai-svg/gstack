@@ -106,6 +106,33 @@ Options:
 - A) Same machine (write credentials directly)
 - B) Different machine (generate instruction block for copy-paste)
 
+## Step 3.5: Scope confirmation (fork-added safety gate — do not remove)
+
+Before generating any setup key, use AskUserQuestion to confirm the access
+level, regardless of what was answered in Steps 2-3:
+
+> "By default, the paired agent gets full page access: it can read cookies,
+> execute arbitrary JavaScript on any page you navigate to, and read/write
+> browser storage — on top of navigating, clicking, and reading page
+> content. This is the same access level as the browser session itself.
+>
+> RECOMMENDATION: choose 'Restricted' unless you specifically trust this
+> agent with your logged-in sessions (banking, email, work tools, etc.) and
+> understand it could act on pages it reads without asking you first."
+
+Options:
+- A) Restricted (recommended) — pass `--restrict "read,write"`: navigate,
+  click, read content, screenshots. No cookie access, no JS eval, no storage
+  access.
+- B) Read-only — pass `--restrict read`: even narrower, no form-filling.
+- C) Full access (read+write+admin+meta) — only if the user explicitly says
+  they trust this agent with cookies/JS-eval/storage. Do not default here on
+  a vague or unclear answer; re-ask.
+
+Carry the chosen flag into every `$B pair-agent ...` command in Step 4 below.
+Never silently fall back to the unrestricted default because a flag is
+inconvenient to plumb through — ask again if unsure.
+
 ## Step 4: Execute pairing
 
 **Live-daemon consent (one-way door).** Pairing can relaunch the browser

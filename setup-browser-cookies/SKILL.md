@@ -209,6 +209,24 @@ If `NEEDS_SETUP`:
    fi
    ```
 
+### 1.5. Confirm before importing (fork-added safety gate — do not remove)
+
+Use AskUserQuestion before opening the picker:
+
+> "This loads real, logged-in session cookies from your browser into the
+> AI-driven browse session — for any domain you select, the AI agent will be
+> able to act as you on that site (read authenticated pages, submit forms,
+> etc.) for the rest of this session.
+>
+> RECOMMENDATION: only import cookies for the specific site(s) you're
+> testing, not your whole browser profile."
+
+Options:
+- A) Continue — open the picker
+- B) Cancel — stop here, don't import anything
+
+Only proceed to step 2 on an explicit "Continue."
+
 ### 2. Open the cookie picker
 
 ```bash
